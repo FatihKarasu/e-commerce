@@ -1,0 +1,106 @@
+.search-container {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    width: 100%;
+    max-width: 600px;
+    input {
+      border: 1px solid #aaa;
+      border-right: none;
+      border-radius: 0.5rem 0 0 0.5rem;
+      height: 100%;
+      padding: 0.5rem 1rem;
+      flex-grow: 1;
+      background-color: #393e46;
+      color: white;
+      &::placeholder {
+        color: white;
+      }
+      &::-moz-placeholder {
+        color: white;
+      }
+      &:-ms-input-placeholder {
+        color: white;
+      }
+      &::-ms-input-placeholder {
+        color: white;
+      }
+      &:focus {
+        box-shadow: none;
+        outline: none;
+  
+        border-bottom-left-radius: 0;
+  
+        + .search-icon {
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+  
+    .search-icon {
+      color: white;
+      border: 1px solid #aaa;
+      border-left: none;
+      border-radius: 0 0.5rem 0.5rem 0;
+      background-color: #393e46;
+      height: 100%;
+      padding: 0 1rem;
+      display: grid;
+      place-content: center;
+      cursor: pointer;
+    }
+  }
+  
+  .icon-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    .c-badge {
+      font-size: 0.7em;
+  
+      position: absolute;
+      top: -0.2rem;
+      left: 50%;
+    }
+  }
+  
+  .navlink-white {
+    color: #bbb;
+    text-decoration: none;
+    &:hover {
+      color: white;
+    }
+  }
+  
+  .menu-container {
+    width: 200%;
+    display: flex;
+    transition: 300ms ease-in-out;
+    .menu {
+      width: 100%;
+    }
+  }
+  .show-next-menu {
+    transform: translateX(-50%);
+  }
+  
+  .search-toggler {
+    position: relative;
+  
+    &:focus {
+      .search-wrapper {
+        display: block;
+        visibility: visible;
+        width: 500px;
+      }
+    }
+    .search-wrapper {
+      display: none;
+      position: absolute;
+      width: 0;
+      top: 0;
+      right: 100%;
+      transition: width 300ms ease-in-out;
+    }
+  }
+  
