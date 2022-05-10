@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import Search from "./Search/Search";
 import OffCanvasMenu from "./OffCanvasMenu/OffCanvasMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,21 +12,22 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 export default function Header() {
-  const [show, setShow] = useState(false);
+  const [searchModal, setSearchModal] = useState(false);
+  const [offcanvas, setOffcanvas] = useState(false);
   return (
     <header className="sticky-top bg-dark">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <div className="d-flex gap-2 order-0">
             <Navbar.Toggle
-              onClick={() => setShow(true)}
+              onClick={() => setOffcanvas(true)}
               className="p-1"
               aria-controls="responsive-navbar-nav"
             />
             <Navbar.Brand href="#home">E-Commerce</Navbar.Brand>
           </div>
           <Nav className="gap-3 gap-lg-1 flex-row order-lg-2">
-            <Nav.Link className="d-none d-md-block" href="#1">
+            <Nav.Link href="#1" onClick={()=>setSearchModal(true)}>
               <FontAwesomeIcon size="lg" icon={faSearch} />
             </Nav.Link>
             <Nav.Link href="#2">
@@ -48,9 +50,8 @@ export default function Header() {
           </Nav>
         </Container>
       </Navbar>
-
-      <OffCanvasMenu show={show} handleClose={() => setShow(false)} />
+      <Search show={searchModal} handleClose={() => setSearchModal(false)} />
+      <OffCanvasMenu show={offcanvas} handleClose={() => setOffcanvas(false)} />
     </header>
   );
 }
-
