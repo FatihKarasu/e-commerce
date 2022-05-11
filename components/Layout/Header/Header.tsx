@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import Link from "next/link";
-import SearchBar from "./SearchBar";
+import SearchBar from "./Search/SearchBar";
 import Search from "./Search/Search";
 import OffCanvasMenu from "./OffCanvasMenu/OffCanvasMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,9 +11,12 @@ import {
   faHeart,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
+import Cart from "./Cart/Cart";
 export default function Header() {
   const [searchModal, setSearchModal] = useState(false);
   const [offcanvas, setOffcanvas] = useState(false);
+  const [cartOffCanvas, setCartOffCanvas] = useState(false);
+
   return (
     <header className="sticky-top bg-dark">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -33,7 +36,7 @@ export default function Header() {
             <Nav.Link href="#2">
               <FontAwesomeIcon size="lg" icon={faHeart} />
             </Nav.Link>
-            <Nav.Link className="icon-container" href="#4">
+            <Nav.Link className="icon-container" href="#4" onClick={() => setCartOffCanvas(true)}>
               <FontAwesomeIcon size="lg" icon={faShoppingBasket} />
               <Badge className="c-badge" pill bg="danger">
                 3
@@ -52,6 +55,8 @@ export default function Header() {
       </Navbar>
       <Search show={searchModal} handleClose={() => setSearchModal(false)} />
       <OffCanvasMenu show={offcanvas} handleClose={() => setOffcanvas(false)} />
+      <Cart show={cartOffCanvas} handleClose={() => setCartOffCanvas(false)} />
+
     </header>
   );
 }
