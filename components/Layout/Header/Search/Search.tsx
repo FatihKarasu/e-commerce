@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Button, Modal } from "react-bootstrap";
-import SearchBar from "../SearchBar";
+import SearchBar from "./SearchBar";
 export default function Search({
   show,
   handleClose,
