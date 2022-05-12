@@ -12,17 +12,19 @@ export default function Search({
 
   if (show) {
     modalWrapper.current?.classList.add("show");
-  }
-  else{
+  } else {
     modalWrapper.current?.classList.remove("show");
   }
   return (
-    <div
-      className="search-modal-wrapper"
-      ref={modalWrapper}
-      onClick={handleClose}
-    >
+    <Modal show={show} onHide={handleClose} className="search-modal">
       <div className="search-modal" onClick={(e)=>e.stopPropagation()}><SearchBar/></div>
-    </div>
+    </Modal>
+    // <div
+    //   className="search-modal-wrapper"
+    //   ref={modalWrapper}
+    //   onClick={handleClose}
+    // >
+    //   <div className="search-modal" onClick={(e)=>e.stopPropagation()}><SearchBar/></div>
+    // </div>
   );
 }

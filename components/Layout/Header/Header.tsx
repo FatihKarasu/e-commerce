@@ -30,19 +30,19 @@ export default function Header() {
             <Navbar.Brand href="#home">E-Commerce</Navbar.Brand>
           </div>
           <Nav className="gap-3 gap-lg-1 flex-row order-lg-2">
-            <Nav.Link href="#1" onClick={()=>setSearchModal(true)}>
+            <Nav.Link  onClick={()=>setSearchModal(true)}>
               <FontAwesomeIcon size="lg" icon={faSearch} />
             </Nav.Link>
-            <Nav.Link href="#2">
+            <Nav.Link>
               <FontAwesomeIcon size="lg" icon={faHeart} />
             </Nav.Link>
-            <Nav.Link className="icon-container" href="#4" onClick={() => setCartOffCanvas(true)}>
+            <Nav.Link className="icon-container"  onClick={() => setCartOffCanvas(true)}>
               <FontAwesomeIcon size="lg" icon={faShoppingBasket} />
               <Badge className="c-badge" pill bg="danger">
                 3
               </Badge>
             </Nav.Link>
-            <Nav.Link href="#3">
+            <Nav.Link>
               <FontAwesomeIcon size="lg" icon={faUser} />
             </Nav.Link>
           </Nav>
