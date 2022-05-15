@@ -3,7 +3,6 @@ import { Card, Button } from "react-bootstrap";
 
 
 export default function ProductCard({ product }: { product: Product }) {
-  console.log(product);
   return (
     <Card className="product-card">
       <Card.Img className="product-image" variant="top" src={product?.image} />

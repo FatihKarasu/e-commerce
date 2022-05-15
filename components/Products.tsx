@@ -1,44 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ProductCard from "./ProductCard";
 
-const products: Product[] = [
-  {
-    id: 1,
-    title: "Iphone 11",
-    image: "images/iphone11.jpeg",
-    description:
-      "Apple’dan yeni bir iPhone 11 satın alın, ücretsiz teslimat ve ücretsiz iadeden yararlanın.",
-    price: "1200",
-  },
-  {
-    id: 2,
-    title: "Airpods",
-    image: "images/airpods.jpeg",
-    description:
-      "Dinamik kafa izleme özellikli uzamsal ses teknolojisine sahip 3. nesil AirPods ile tanışın. Apple.com’da ücretsiz gönderim ile.",
-    price: "1200",
-  },
-  {
-    id: 3,
-    title: "Macbook Pro",
-    image: "images/macbookpro.webp",
-    description:
-      "18.399,00 Ücretsiz kargo. Öğrenci, Öğretmen ve Eğitim Kurumlarına özel indirimlerle hemen alın",
-    price: "18.399",
-  },
-];
+let BASE_API_URI = process.env.NEXT_PUBLIC_BASE_API_URI as string;
 
 export default function Products() {
+  const [products, setProducts] = useState<Product[]>();
+
+  const fetchProducts = async () => {
+    const response = await fetch(BASE_API_URI + "/products");
+    const data: Product[] = await response.json();
+    setProducts(data);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetchProducts();
+    }, 1000);
+  }, []);
   return (
     <section className="products">
       <Container>
         <Row>
-          {products.map((product: Product) => (
-            <Col key={product.id} lg={3}>
-              <ProductCard product={product} />
-            </Col>
-          ))}
+          {products != undefined || products != null
+            ? products.map((product: Product) => (
+                <Col key={product.id} lg={3}>
+                  <ProductCard product={product} />
+                </Col>
+              ))
+            : "Loading"}
         </Row>
       </Container>
     </section>

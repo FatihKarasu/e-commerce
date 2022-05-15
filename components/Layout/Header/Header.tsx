@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import Link from "next/link";
 import Menu from "./Menu/Menu";
@@ -13,6 +13,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Cart from "./Cart/Cart";
 let menuTimeout: ReturnType<typeof setTimeout>;
+
+let BASE_API_URI = process.env.NEXT_PUBLIC_BASE_API_URI as string;
+
 export default function Header() {
   const [searchModal, setSearchModal] = useState(false);
   const [offcanvas, setOffcanvas] = useState(false);
@@ -21,7 +24,20 @@ export default function Header() {
   const menuRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const [showMenu, setShowMenu] = useState(false);
+  const [categories, setCategories] = useState<Category[]>();
+
+  const fetchCategories = async () => {
+    const response = await fetch(BASE_API_URI + "/categories");
+    const data: Category[] = await response.json();
+    setCategories(data);
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const openMenu = () => {
+    if (showMenu) return;
     clearTimeout(menuTimeout);
     menuTimeout = setTimeout(() => {
       setShowMenu(true);
@@ -52,7 +68,6 @@ export default function Header() {
       setShowMenu(false);
     }, 250);
   };
-
   return (
     <header className="sticky-top bg-dark position-relative">
       <Navbar
@@ -97,36 +112,18 @@ export default function Header() {
             onMouseEnter={() => openMenu()}
             onMouseLeave={() => closeMenu()}
           >
-            <Link href="/products">
-              <a
-                className={`navlink-white ${
-                  categoryId === "Women" && showMenu ? "active" : ""
-                }`}
-                onMouseEnter={() => setCategoryId("Women")}
-              >
-                Women
-              </a>
-            </Link>
-            <Link href="#pricing">
-              <a
-                className={`navlink-white ${
-                  categoryId === "Men" && showMenu ? "active" : ""
-                }`}
-                onMouseEnter={() => setCategoryId("Men")}
-              >
-                Men
-              </a>
-            </Link>
-            <Link href="#baby">
-              <a
-                className={`navlink-white ${
-                  categoryId === "Baby" && showMenu ? "active" : ""
-                }`}
-                onMouseEnter={() => setCategoryId("Baby")}
-              >
-                Baby
-              </a>
-            </Link>
+            {categories?.map((category: Category, index) => (
+              <Link href={`/${category.id}`} key={index}>
+                <a
+                  className={`navlink-white ${
+                    categoryId === category.id && showMenu ? "active" : ""
+                  }`}
+                  onMouseEnter={() => setCategoryId(category.id)}
+                >
+                  {category.title}
+                </a>
+              </Link>
+            ))}
           </Nav>
         </Container>
       </Navbar>
