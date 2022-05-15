@@ -40,7 +40,7 @@
     display: flex;
     font-size: 1.5rem;
     width: 100%;
-    
+
     input {
       height: 100%;
       padding: 0.75rem 1rem;
@@ -63,7 +63,7 @@
       &:focus {
         box-shadow: none;
         outline: none;
-        +.search-icon {
+        + .search-icon {
           color: white;
         }
       }
@@ -75,6 +75,7 @@
       display: grid;
       place-content: center;
       cursor: pointer;
+      margin-left: -1px;
     }
   }
   .search-menu {
@@ -143,4 +144,33 @@
 }
 .show-next-menu {
   transform: translateX(-50%);
+}
+
+.main-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 1rem 1rem;
+
+  background-color: white;
+
+  .menu-link {
+    color: black;
+    text-decoration: none;
+    width: fit-content;
+    &:hover {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+}
+.categories {
+  a {
+    padding: 0 1rem .25rem 1rem;
+    border-bottom: 3px solid transparent;
+  }
+  .active {
+    border-bottom-color: #bbb;
+    color: white;
+  }
 }
