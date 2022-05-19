@@ -11,10 +11,12 @@ declare global {
         image: string;
         description: string;
         price: string;
+        old_price: string;
     };
     type Category = {
         id: string;
         categoryId: string|null;
         title: string;
     };
+
 }
