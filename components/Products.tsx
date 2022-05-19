@@ -24,7 +24,7 @@ export default function Products() {
         <Row>
           {products != undefined || products != null
             ? products.map((product: Product) => (
-                <Col key={product.id} lg={3}>
+                <Col key={product.id} sm={6} md={4} lg={3} className="mb-4">
                   <ProductCard product={product} />
                 </Col>
               ))
