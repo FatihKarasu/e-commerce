@@ -25,6 +25,8 @@ export default function Header() {
   const navRef = useRef<HTMLDivElement>(null);
   const [showMenu, setShowMenu] = useState(false);
   const [categories, setCategories] = useState<Category[]>();
+  const [subCategories, setSubCategories] = useState<Category[]>([]);
+  const [fetched, setFetched] = useState<string[]>([]);
 
   const fetchCategories = async () => {
     const response = await fetch(BASE_API_URI + "/categories");
@@ -35,6 +37,18 @@ export default function Header() {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  const fetchSubCategories = async () => {
+    const response = await fetch(BASE_API_URI + "/categories/" + categoryId);
+    const data: Category[] = await response.json();
+    setSubCategories((prev) => [...prev, ...data]);
+    setFetched((prev) => [...prev, categoryId]);
+  };
+
+  useEffect(() => {
+    if (fetched.includes(categoryId)) return;
+    fetchSubCategories();
+  }, [categoryId]);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -127,7 +141,14 @@ export default function Header() {
           </Nav>
         </Container>
       </Navbar>
-      {showMenu ? <Menu categoryId={categoryId} menuRef={menuRef} /> : null}
+      {showMenu ? (
+        <Menu
+          subCategories={subCategories.filter(
+            (f) => f.categoryId === categoryId
+          )}
+          menuRef={menuRef}
+        />
+      ) : null}
       <Search show={searchModal} handleClose={() => setSearchModal(false)} />
       <OffCanvasMenu show={offcanvas} handleClose={() => setOffcanvas(false)} />
       <Cart show={cartOffCanvas} handleClose={() => setCartOffCanvas(false)} />

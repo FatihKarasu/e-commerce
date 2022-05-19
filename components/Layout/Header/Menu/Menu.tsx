@@ -1,28 +1,14 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 let BASE_API_URI = process.env.NEXT_PUBLIC_BASE_API_URI as string;
 
 export default function Menu({
-  categoryId,
+  subCategories,
   menuRef,
 }: {
-  categoryId: string;
+  subCategories: Category[];
   menuRef: React.RefObject<HTMLDivElement>;
 }) {
-  const [subCategories, setSubCategories] = useState<Category[]>();
-
-  const fetchSubCategories = async () => {
-    const response = await fetch(BASE_API_URI + "/categories/"+categoryId);
-    const data: Category[] = await response.json();
-    setSubCategories(data);
-  };
-
-  useEffect(() => {
-    fetchSubCategories()
-  }, [categoryId])
-  
-
-
   let col1: Category[] = [],
     col2: Category[] = [];
   for (
