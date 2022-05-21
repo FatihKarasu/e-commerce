@@ -15,10 +15,10 @@ export default function ProductCard({ product }: { product: Product }) {
         <span className="product-discount-label">-33%</span>
       </div>
       <div className="product-content">
-        <h3 className="title"><a href="#">{product.title}</a></h3>
+        <h3 className="title"><a href={product.categoryId+"/"+product.id}>{product.title}</a></h3>
         <div className="price"><span>{product.old_price}</span> {product.price}</div>
         <Button variant="success" className="add-cart-btn mt-2">
-          <div className="me-2 d-inline-block"><FontAwesomeIcon size="md" icon={faShoppingBasket} /></div>
+          <div className="me-2 d-inline-block"><FontAwesomeIcon icon={faShoppingBasket} /></div>
           ADD TO CART
         </Button>
       </div>

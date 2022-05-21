@@ -98,7 +98,9 @@ export default function Header() {
               className="p-1"
               aria-controls="responsive-navbar-nav"
             />
-            <Navbar.Brand href="#home">E-Commerce</Navbar.Brand>
+            <Link href="/">
+              <Navbar.Brand>E-Commerce</Navbar.Brand>
+            </Link>
           </div>
           <Nav className="gap-3 gap-lg-1 flex-row order-lg-2 py-3">
             <Nav.Link onClick={() => setSearchModal(true)}>

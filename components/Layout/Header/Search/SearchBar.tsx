@@ -2,27 +2,44 @@ import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "react-bootstrap";
+import Link from "next/link";
 let timeout: ReturnType<typeof setTimeout>;
+let BASE_API_URI = process.env.NEXT_PUBLIC_BASE_API_URI as string;
+type SearchResult = {
+  id: string;
+  title: string;
+};
 
 export default function SearchBar() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const inputEl = useRef<HTMLInputElement>(null);
+
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+
   useEffect(() => {
     inputEl.current?.focus();
   }, []);
 
-  
+  const fetchProducts = async () => {
+    const response = await fetch(BASE_API_URI + "/products/search/" + input);
+    const data: SearchResult[] = await response.json();
+    setSearchResults(data);
+  };
+
   useEffect(() => {
-    if (input.length < 3) return;
-    setIsLoading(true);
+    if (input.length < 3) {
+      setSearchResults([]);
+      return;
+    }
+    if (searchResults.length === 0) setIsLoading(true);
     clearTimeout(timeout);
     timeout = setTimeout(() => {
+      fetchProducts();
       setIsLoading(false);
     }, 1000);
   }, [input]);
-
-
+  console.log(searchResults);
   return (
     <div className="search-container">
       <div className="search-input">
@@ -70,13 +87,16 @@ export default function SearchBar() {
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </div>
-        ) : (
+        ) : searchResults.length !== 0 ? (
           <div className="search-suggestions">
-            <a className="item">Item 1</a>
-            <a className="item">Item 2</a>
-            <a className="item">Item 3</a>
-            <a className="item">Item 4</a>
+            {searchResults.map((result) => (
+              <Link href={`/products/${result.id}`}>
+                <a className="item">{result.title}</a>
+              </Link>
+            ))}
           </div>
+        ) : (
+          <div>Nothing Found</div>
         )}
       </div>
     </div>

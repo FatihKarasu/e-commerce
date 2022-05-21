@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 let BASE_API_URI = process.env.NEXT_PUBLIC_BASE_API_URI as string;
@@ -26,18 +27,18 @@ export default function Menu({
         <div className="col-2">
           <div className="d-flex flex-column gap-2">
             {col1.map((c) => (
-              <a key={c.id} className="menu-link" href="#">
-                {c.title}
-              </a>
+              <Link key={c.id} href={c.id}>
+                <a className="menu-link">{c.title}</a>
+              </Link>
             ))}
           </div>
         </div>
         <div className="col-2">
           <div className="d-flex flex-column gap-2">
             {col2.map((c) => (
-              <a key={c.id} className="menu-link" href="#">
-                {c.title}
-              </a>
+              <Link key={c.id} href={c.id}>
+                <a className="menu-link">{c.title}</a>
+              </Link>
             ))}
           </div>
         </div>

@@ -6,7 +6,8 @@ declare global {
      */
 
     type Product = {
-        id: number;
+        id: string;
+        categoryId: string;
         title: string;
         image: string;
         description: string;
