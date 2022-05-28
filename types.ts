@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export { };
 
 declare global {
@@ -6,17 +8,36 @@ declare global {
      */
 
     type Product = {
+        id: string,
+        categoryId: string,
+        detail: ProductDetail,
+        variants: Variant[]
+    };
+    type ProductDetail = {
         id: string;
-        categoryId: string;
         title: string;
         image: string;
         description: string;
         price: string;
         old_price: string;
     };
+    type Variant = {
+        color: Color,
+        size: Size,
+    }
+    type Color = {
+        id: string,
+        name: string,
+        hexCode: string,
+    };
+    type Size = {
+        id: string,
+        name: string,
+        abbr: string,
+    };
     type Category = {
         id: string;
-        categoryId: string|null;
+        categoryId: string | null;
         title: string;
     };
 

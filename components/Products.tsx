@@ -8,7 +8,7 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>();
 
   const fetchProducts = async () => {
-    const response = await fetch(BASE_API_URI + "/products");
+    const response = await fetch(BASE_API_URI + "/categories/women/products?start=0&limit=12");
     const data: Product[] = await response.json();
     setProducts(data);
   };
