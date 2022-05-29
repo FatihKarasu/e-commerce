@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
 
 export default function ProductCard({ product }: { product: Product }) {
+  const [productColors, setProductColors] = useState<Color[]>([]);
+  console.log(productColors)
+  console.log(product)
+  useEffect(() => {
+    let colors: Color[] = [];
+    product.variants.forEach((v) => {
+      if (colors.findIndex((c) => c.id === v.color.id) === -1) {
+        colors.push(v.color);
+      }
+    });
+    setProductColors(colors);
+  }, []);
+
   return (
     <div className="product-grid">
       <div className="product-image">
@@ -19,6 +32,21 @@ export default function ProductCard({ product }: { product: Product }) {
             )}
           </span>
         ) : null}
+        <div className="colors">
+          {productColors.slice(0, 3).map((color, index) => (
+            <div
+              key={color.id}
+              className="color"
+              style={{ backgroundColor: color.hexCode }}
+              title={color.name}
+            ></div>
+          ))}
+          {productColors.length > 3 ? (
+            <div className="color" title={`${productColors.length - 3} more`} >
+              +{productColors.length - 3}
+            </div>
+          ) : null}
+        </div>
       </div>
       <div className="product-content">
         <h3 className="title">
@@ -32,12 +60,7 @@ export default function ProductCard({ product }: { product: Product }) {
           ) : null}
           {product.detail.price} TL
         </div>
-        <Button variant="success" className="add-cart-btn mt-2">
-          <div className="me-2 d-inline-block">
-            <FontAwesomeIcon icon={faShoppingBasket} />
-          </div>
-          ADD TO CART
-        </Button>
+        
       </div>
     </div>
   );

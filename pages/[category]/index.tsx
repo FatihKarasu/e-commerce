@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
@@ -11,9 +11,8 @@ export default function index() {
   const [products, setProducts] = useState<Product[]>([]);
   const [start, setStart] = useState(0);
   const [limit, setLimit] = useState(12);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [canFetchMore, setCanFetchMore] = useState(true);
-
   const fetchProducts = async () => {
     const response = await fetch(
       `${BASE_API_URI}/categories/${category}/products?start=${start}&limit=${limit}`
@@ -23,25 +22,26 @@ export default function index() {
     setLoading(false);
     if (data.length < limit) setCanFetchMore(false);
   };
-
   useEffect(() => {
     if (category === undefined) return;
     setProducts([]);
     setCanFetchMore(true);
     setStart(0);
     setLoading(true);
-    setTimeout(() => {
-      fetchProducts();
-    }, 1000);
   }, [category]);
 
   useEffect(() => {
     if (category === undefined) return;
     setLoading(true);
+  }, [start]);
+
+  useEffect(() => {
+    if (!loading) return;
     setTimeout(() => {
       fetchProducts();
     }, 1000);
-  }, [start]);
+  }, [loading]);
+
   return (
     <>
       <Head>
