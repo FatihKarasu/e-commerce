@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
+import Link from "next/link";
 
 export default function ProductCard({ product }: { product: Product }) {
   const [productColors, setProductColors] = useState<Color[]>([]);
-  console.log(productColors)
-  console.log(product)
   useEffect(() => {
     let colors: Color[] = [];
     product.variants.forEach((v) => {
@@ -16,6 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
     });
     setProductColors(colors);
   }, []);
+
 
   return (
     <div className="product-grid">
@@ -27,8 +27,8 @@ export default function ProductCard({ product }: { product: Product }) {
             %
             {Math.ceil(
               100 -
-                (parseInt(product.detail.price) * 100) /
-                  parseInt(product.detail.old_price)
+              (parseInt(product.detail.price) * 100) /
+              parseInt(product.detail.old_price)
             )}
           </span>
         ) : null}
@@ -50,9 +50,12 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="product-content">
         <h3 className="title">
-          <a href={product.categoryId + "/" + product.id}>
-            {product.detail.title}
-          </a>
+          <Link href={product.categoryId + "/" + product.id}>
+            <a>
+              {product.detail.title}
+            </a>
+          </Link>
+
         </h3>
         <div className="price">
           {product.detail.old_price !== "" ? (
@@ -60,7 +63,7 @@ export default function ProductCard({ product }: { product: Product }) {
           ) : null}
           {product.detail.price} TL
         </div>
-        
+
       </div>
     </div>
   );

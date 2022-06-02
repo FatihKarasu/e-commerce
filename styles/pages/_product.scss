@@ -1,0 +1,25 @@
+.product-detail {
+    .colors {
+        display: flex;
+        margin-top: 1rem;
+        .color {
+          cursor: pointer;
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 50%;
+          margin-right: 0.5rem;
+          border: 1px solid #bdc3c7;
+        }
+      }
+      .sizes {
+        display: flex;
+        margin-top: 1rem;
+        .size {
+          cursor: pointer;
+          padding:0.2rem 0.6rem;
+          border:1px solid #000;
+          margin-right: 0.5rem;
+          font-size: 0.9rem;
+        }
+      }
+}
